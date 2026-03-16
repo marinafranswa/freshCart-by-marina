@@ -28,7 +28,6 @@ export interface Subcategory {
   category: string;
 }
 
-
 export interface Brand {
   _id: string;
   name: string;

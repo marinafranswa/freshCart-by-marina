@@ -9,9 +9,6 @@ const totalStars: number = 5;
 export default async function Products() {
   const response: productsResponse = await getProducts();
     const products = response.data;
-    console.log(products);
-    
-
   return (
       <section>
       <div className="container">
