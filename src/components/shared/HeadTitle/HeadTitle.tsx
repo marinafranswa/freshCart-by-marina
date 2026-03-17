@@ -3,13 +3,14 @@ import Link from "next/link";
 type SectionTitleProps = {
   title: string;
   sub: string;
-  sideTitle?: string;
+  sideTitle: string;
+  href: string;
 };
 
 export default function HeadTitle({
   title,
   sub,
-  sideTitle,
+  sideTitle,href
 }: SectionTitleProps) {
   return (
     <div className="flex flex-col sm:flex-row justify-between sm:items-center mb-8">
@@ -19,13 +20,13 @@ export default function HeadTitle({
           {title} <span className="text-emerald-600">{sub}</span>
         </h2>
       </div>
-     {sideTitle? <Link
+ <Link
         className="text-emerald-600 self-end sm:self-auto hover:text-emerald-700 font-medium flex items-center cursor-pointer"
-        href="categories"
+        href={href}
       >
         {sideTitle}
         <ArrowRight size={18} />
-      </Link>:null}
+      </Link>
     </div>
   );
 }

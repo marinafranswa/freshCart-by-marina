@@ -4,3 +4,6 @@ import { Product } from "@/interfaces/products.interface";
 
 export type CategoriesResponse = ListingResponse<Category>;
 export type productsResponse = ListingResponse<Product>;
+export type SingleProduct = {
+    data:Product
+}

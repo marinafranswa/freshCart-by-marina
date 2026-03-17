@@ -21,14 +21,14 @@ export default function SponsorBar() {
               <div className="flex items-center gap-4 text-gray-500">
                 <Link
                   href="tel:+18001234567"
-                  className="flex items-center gap-1.5 hover:text-primary-600 transition-colors"
+                  className="flex items-center gap-1.5 hover:text-emerald-600 transition-colors"
                 >
                   <Phone className="text-gray-500 fill-gray-500" size={14} />
                   <span>+1 (800) 123-4567</span>
                 </Link>
                 <Link
                   href="mailto:support@freshcart.com"
-                  className="flex items-center gap-1.5 hover:text-primary-600 transition-colors"
+                  className="flex items-center gap-1.5 hover:text-emerald-600 transition-colors"
                 >
                   <Mail className="text-gray-600" size={14} />
                   <span>support@freshcart.com</span>
@@ -37,14 +37,14 @@ export default function SponsorBar() {
               <span className="w-px h-4 bg-gray-200" />
               <div className="flex items-center gap-4">
                 <a
-                  className="flex items-center gap-1.5 text-gray-600 hover:text-primary-600 transition-colors"
+                  className="flex items-center gap-1.5 text-gray-600 hover:text-emerald-600 transition-colors"
                   href="/login"
                 >
                   <User className="text-gray-600" size={14} />
                   <span>Sign In</span>
                 </a>
                 <a
-                  className="flex items-center gap-1.5 text-gray-600 hover:text-primary-600 transition-colors"
+                  className="flex items-center gap-1.5 text-gray-600 hover:text-emerald-600 transition-colors"
                   href="/register"
                 >
                   <UserPlus className="text-gray-500 fill-gray-500" size={14} />

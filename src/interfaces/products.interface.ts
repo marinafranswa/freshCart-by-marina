@@ -1,7 +1,9 @@
+import { Brand } from "./brands.interface";
 import { Category } from "./categories.interface";
+import { Subcategory } from "./subcategories.interface";
 
 export interface Product {
-  sold: number;
+  sold?: number;
   images: string[];
   subcategory: Subcategory[];
   ratingsQuantity: number;
@@ -11,7 +13,6 @@ export interface Product {
   description: string;
   quantity: number;
   price: number;
-  availableColors: unknown[];
   imageCover: string;
   category: Category;
   brand: Brand;
@@ -19,18 +20,7 @@ export interface Product {
   createdAt: string;
   updatedAt: string;
   id: string;
+  priceAfterDiscount?: number;
+  availableColors?: string[];
 }
 
-export interface Subcategory {
-  _id: string;
-  name: string;
-  slug: string;
-  category: string;
-}
-
-export interface Brand {
-  _id: string;
-  name: string;
-  slug: string;
-  image: string;
-}

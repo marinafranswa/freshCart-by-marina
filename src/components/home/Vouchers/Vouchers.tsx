@@ -7,8 +7,8 @@ export default function Vouchers() {
       <div className="container mx-auto">
         <div className="grid md:grid-cols-2 gap-6">
           <div
-            className="relative overflow-hidden rounded-2xl bg-linear-to-br from-emerald-500 to-emerald-700 p-8 text-white"
-            style={{ opacity: 1, transform: "none" }}
+            className="relative overflow-hidden opacity-100 transform-none rounded-2xl bg-linear-to-br from-emerald-500 to-emerald-700 p-8 text-white"
+   
           >
             <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
             <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2" />
@@ -40,8 +40,8 @@ export default function Vouchers() {
             </div>
           </div>
           <div
-            className="relative overflow-hidden rounded-2xl bg-linear-to-br from-orange-400 to-rose-500 p-8 text-white"
-            style={{ opacity: 1, transform: "none" }}
+            className="relative overflow-hidden opacity-100 transform-none rounded-2xl bg-linear-to-br from-orange-400 to-rose-500 p-8 text-white"
+   
           >
             <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
             <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2" />

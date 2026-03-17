@@ -6,15 +6,18 @@ import {
   ChevronDown,
   Headset,
   Heart,
-  Menu,
   Search,
   ShoppingCart,
   User,
 } from "lucide-react";
-const links = [
-  { name: "home", href: "/" },
-  { name: "shop", href: "/products" },
+import { Button } from "@/components/ui/button";
+import Dialog from "@/components/shared/Dialog/Dialog";
+
+ const links = [
+  { name: "Home", href: "/" },
+  { name: "Shop", href: "/products" },
   { name: "Brands", href: "/brands" },
+
 ];
 const categories = [
   { name: "All Categories", href: "/categories" },
@@ -57,12 +60,12 @@ export default function Navbar() {
                     placeholder="Search for products, brands and more..."
                     className="w-full px-5 py-3 pr-12 rounded-full border border-gray-200 bg-gray-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500 transition-all text-sm"
                   />
-                  <button
+                  <Button
                     type="submit"
                     className="absolute right-1.5 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-green-600 text-white flex items-center justify-center hover:bg-green-700 transition-colors"
                   >
                     <Search size={16} />
-                  </button>
+                  </Button>
                 </div>
               </form>
               <nav className="hidden xl:flex items-center gap-6">
@@ -76,10 +79,10 @@ export default function Navbar() {
                   </Link>
                 ))}
                 <div className="relative group">
-                  <button className="flex items-center gap-1.5 text-gray-700 hover:text-green-600 font-medium transition-colors py-2">
+                  <Button className="bg-transparent hover:bg-transparent text-md flex items-center gap-1.5 text-gray-700 hover:text-green-600 font-medium transition-colors py-2">
                     Categories
                     <ChevronDown />
-                  </button>
+                  </Button>
                   <div className="absolute top-full left-0 pt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                     <div className="bg-white border border-gray-100 rounded-xl shadow-xl py-2 min-w-50">
                       {categories.map((category, idx) => (
@@ -98,7 +101,7 @@ export default function Navbar() {
                   className="text-gray-700 hover:text-green-600 font-medium transition-colors"
                   href={links[2].href}
                 >
-                 {links[2].name}
+                  {links[2].name}
                 </Link>
               </nav>
               <div className="flex items-center gap-1 lg:gap-2">
@@ -141,9 +144,8 @@ export default function Navbar() {
                   <User size={16} />
                   Sign In
                 </a>
-                <button className="lg:hidden ml-1 w-10 h-10 rounded-full bg-green-600 hover:bg-green-700 text-white flex items-center justify-center transition-colors">
-                  <Menu size={18} />
-                </button>
+          
+                <Dialog/>
               </div>
             </div>
           </div>
