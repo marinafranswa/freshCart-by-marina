@@ -15,7 +15,6 @@ export default function HomePage() {
       <Vouchers />
       <Products />
       <ContactForm />
-    <CommonBanner variant="emerald"/>
     </>
   );
 }

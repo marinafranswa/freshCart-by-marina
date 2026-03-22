@@ -1,11 +1,12 @@
 "use client";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules";
-import imageSlider from "@/assets/19b048dcec278f9d9c89514b670e0d9f8909f6dc.png";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-const basicSliderOptions = {
+import imageSlider from "@/assets/19b048dcec278f9d9c89514b670e0d9f8909f6dc.png";
+import { Navigation, Pagination } from "swiper/modules";
+
+ const basicSliderOptions = {
   loop: true,
   spaceBetween: 20,
   slidesPerView: 1,
@@ -28,6 +29,7 @@ const slides = [
     textColor: "text-green-500",
     primaryBtn: { label: "Shop Now", href: "/products" },
     secondaryBtn: { label: "View Deals", href: "/deals" },
+    image: imageSlider.src,
   },
   {
     title: "Premium Quality Guaranteed",
@@ -35,6 +37,7 @@ const slides = [
     textColor: "text-blue-500",
     primaryBtn: { label: "Shop Now", href: "/organic" },
     secondaryBtn: { label: "Learn More", href: "/about" },
+    image: imageSlider.src,
   },
   {
     title: "Fast & Free Delivery",
@@ -42,17 +45,18 @@ const slides = [
     textColor: "text-purple-500",
     primaryBtn: { label: "Order Now", href: "/deals" },
     secondaryBtn: { label: "Delivery Info", href: "/products" },
+    image: imageSlider.src,
   },
 ];
 export default function MainSlider() {
   return (
     <section>
       <Swiper {...basicSliderOptions} className="relative">
-        {slides.map((slide, i) => (
+        {slides.map((slide, i: number) => (
           <SwiperSlide key={i} className="w-361.5">
             <div
               style={{
-                backgroundImage: `url(${imageSlider.src})`,
+                backgroundImage: `url(${slide.image})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}

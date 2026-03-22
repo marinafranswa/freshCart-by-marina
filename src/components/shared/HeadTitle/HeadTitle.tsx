@@ -3,8 +3,8 @@ import Link from "next/link";
 type SectionTitleProps = {
   title: string;
   sub: string;
-  sideTitle: string;
-  href: string;
+  sideTitle?: string;
+  href?: string;
 };
 
 export default function HeadTitle({
@@ -20,13 +20,13 @@ export default function HeadTitle({
           {title} <span className="text-emerald-600">{sub}</span>
         </h2>
       </div>
- <Link
+{href? <Link
         className="text-emerald-600 self-end sm:self-auto hover:text-emerald-700 font-medium flex items-center cursor-pointer"
         href={href}
       >
         {sideTitle}
         <ArrowRight size={18} />
-      </Link>
+      </Link>:null}
     </div>
   );
 }

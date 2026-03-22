@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import { FreeMode, Navigation, Thumbs } from "swiper/modules";
+import { FreeMode,Navigation, Thumbs } from "swiper/modules";
 import Image from "next/image";
 
 import type { Swiper as SwiperType } from "swiper";
@@ -27,16 +27,16 @@ const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
         spaceBetween={10}
         navigation={true}
         thumbs={{ swiper: thumbsSwiper }}
-        modules={[FreeMode, Navigation, Thumbs]}
+        modules={[FreeMode,  Thumbs]}
         className="mySwiper2"
       >
         {images.map((image, i) => (
           <SwiperSlide key={i}>
-            <div className="relative w-full h-96">
+            <div className="relative w-full h-96 ">
               <Image
                 src={image}
                 fill
-                className="object-contain"
+                className="object-contain p-5"
                 alt={`product image ${i}`}
               />
             </div>
@@ -55,11 +55,11 @@ const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
       >
         {images.map((image, i) => (
           <SwiperSlide key={i}>
-            <div className="relative w-full h-20">
+            <div className="relative w-full h-50">
               <Image
                 src={image}
                 fill
-                className="object-cover cursor-pointer"
+                className="object-contain cursor-pointer"
                 alt={`thumbnail ${i}`}
               />
             </div>
