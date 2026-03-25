@@ -10,6 +10,7 @@ import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "./globals.css";
+import { Toaster } from "sonner";
 
 
 const exo = Exo({subsets:['latin'],variable:'--font-sans'});
@@ -39,7 +40,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Navbar/>
+        <Navbar />
+        <Toaster position="top-right"/>
         {children}
         <Footer/>
       </body>
