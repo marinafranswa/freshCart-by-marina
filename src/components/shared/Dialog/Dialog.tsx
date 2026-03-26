@@ -8,21 +8,39 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import  logoImage  from "@/assets/freshcart-logo.49f1b44d.svg"
-
-import { Headset, Heart, Menu, Search, ShoppingCart, X } from "lucide-react";
+import logoImage from "@/assets/freshcart-logo.49f1b44d.svg";
+import {
+  Headset,
+  Heart,
+  LogOut,
+  Menu,
+  Search,
+  ShoppingCart,
+  User,
+  X,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
+import { Session } from "next-auth"; // ✅ adjust to your session type
+import { signOut } from "next-auth/react";
+import { useLogout } from "@/hooks/useLogout";
 
- const links = [
-   { name: "Home", href: "/" },
-   { name: "Shop", href: "/products" },
-   { name: "Brands", href: "/brands" },
-   { name: "Categories", href: "/categories" },
- ];
+const links = [
+  { name: "Home", href: "/" },
+  { name: "Shop", href: "/products" },
+  { name: "Brands", href: "/brands" },
+  { name: "Categories", href: "/categories" },
+];
 
-export default function Dialog() {
+
+interface DialogProps {
+  status: "authenticated" | "unauthenticated" | "loading";
+  sessionData?: Session | null;
+}
+
+export default function Dialog({ status, sessionData }: DialogProps) {
+  const { logOutHandler } = useLogout();
   return (
     <Drawer direction="right">
       <DrawerTrigger asChild>
@@ -30,6 +48,7 @@ export default function Dialog() {
           <Menu size={18} />
         </Button>
       </DrawerTrigger>
+
       <DrawerContent className="overflow-y-auto overflow-x-hidden">
         <DrawerHeader>
           <DrawerTitle>
@@ -49,29 +68,32 @@ export default function Dialog() {
             </div>
           </DrawerTitle>
         </DrawerHeader>
+
         <form className="p-4 border-b border-gray-100">
           <div className="relative">
             <input
               type="text"
               placeholder="Search products..."
-              className="w-full px-4 py-3 pr-12 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 text-sm"
+              className="w-full px-4 py-3 pr-12 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500 text-sm"
               defaultValue=""
             />
             <Button
               type="submit"
               className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-green-600 text-white flex items-center justify-center"
             >
-              <Search />
+              <Search size={16} />
             </Button>
           </div>
         </form>
+
         <Separator />
+
         <nav className="p-4">
           <div className="space-y-1">
-            {links.map((link, i) => (
+            {links.map((link) => (
               <Link
-                key={i}
-                className="flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 transition-colors"
+                key={link.href} 
+                className="flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-gray-700 hover:text-green-600 hover:bg-green-50 transition-colors"
                 href={link.href}
               >
                 {link.name}
@@ -79,10 +101,12 @@ export default function Dialog() {
             ))}
           </div>
         </nav>
+
         <Separator />
+
         <div className="p-4 space-y-1">
           <Link
-            className="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-emerald-50 transition-colors"
+            className="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-green-50 transition-colors"
             href="/wishlist"
           >
             <div className="flex items-center gap-3">
@@ -93,13 +117,13 @@ export default function Dialog() {
             </div>
           </Link>
           <Link
-            className="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-emerald-50 transition-colors"
+            className="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-green-50 transition-colors"
             href="/cart"
           >
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-full bg-emerald-50 flex items-center justify-center">
+              <div className="w-9 h-9 rounded-full bg-green-50 flex items-center justify-center">
                 <ShoppingCart
-                  className="text-emerald-600 fill-emerald-600"
+                  className="text-green-600 fill-green-600"
                   size={20}
                 />
               </div>
@@ -109,34 +133,63 @@ export default function Dialog() {
         </div>
 
         <DrawerFooter>
-          <div className="p-4 space-y-1">
-            <div className="grid grid-cols-2 gap-3 pt-2">
+          <Separator />
+
+          {status === "unauthenticated" ? (
+            <div className="p-4 pt-2 grid grid-cols-2 gap-3">
               <Link
-                className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-emerald-600 text-white font-semibold hover:bg-emerald-700 transition-colors"
-                href="/login"
+                href={"/login"}
+                className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-green-600 text-white font-semibold hover:bg-green-700 transition-colors"
               >
                 Sign In
               </Link>
               <Link
-                className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 border-emerald-600 text-emerald-600 font-semibold hover:bg-emerald-50 transition-colors"
                 href="/register"
+                className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 border-green-600 text-green-600 font-semibold hover:bg-green-50 hover:text-green-700 transition-colors"
               >
                 Sign Up
               </Link>
             </div>
-          </div>
+          ) : (
+            <div className="p-4 space-y-1">
+
+              <Link
+                className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-green-50 transition-colors"
+                href="/profile"
+              >
+                <div className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center">
+                  <User className="text-gray-600" size={20} />
+                </div>
+                <span className="font-medium text-gray-700">
+                  {sessionData?.user?.name}
+                </span>
+              </Link>
+
+              <Button
+                variant="ghost"
+               onClick={logOutHandler}
+                className="flex items-center gap-3 px-4 py-7 rounded-xl hover:bg-red-50 hover:text-red-600 transition-colors w-full justify-start"
+              >
+                <div className="w-9 h-9 rounded-full bg-red-100 flex items-center justify-center">
+                  <LogOut className="text-red-600" size={20} />
+                </div>
+                <span className="font-medium text-red-600">Sign out</span>
+              </Button>
+            </div>
+          )}
+
           <Link
-            className="mx-4 mt-2 p-4 rounded-xl bg-gray-50 border border-gray-100 flex items-center gap-3 hover:bg-emerald-50 transition-colors"
+            className="mx-4 mt-2 p-4 rounded-xl bg-gray-50 border border-gray-100 flex items-center gap-3 hover:bg-green-50 transition-colors"
             href="/contact"
           >
-            <div className="w-10 h-10 rounded-full text-green-600 bg-emerald-100 flex items-center justify-center">
-              <Headset size={22}/>
+            <div className="w-10 h-10 rounded-full text-green-600 bg-green-100 flex items-center justify-center">
+              <Headset size={22} />
             </div>
             <div>
               <div className="text-sm font-semibold text-gray-700">
                 Need Help?
               </div>
-              <div className="text-sm text-emerald-600">Contact Support</div>
+              <div className="text-sm text-green-600">Contact Support</div>
             </div>
           </Link>
         </DrawerFooter>

@@ -1,3 +1,4 @@
+
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Exo } from "next/font/google";
 
@@ -11,6 +12,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "./globals.css";
 import { Toaster } from "sonner";
+import Provider from "@/components/Providers/Provider";
 
 
 const exo = Exo({subsets:['latin'],variable:'--font-sans'});
@@ -40,10 +42,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Navbar />
-        <Toaster position="top-right"/>
-        {children}
-        <Footer/>
+        <Provider>
+          <Navbar />
+          <Toaster position="top-right" />
+          {children}
+          <Footer />
+        </Provider>
       </body>
     </html>
   );

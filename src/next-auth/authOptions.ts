@@ -1,5 +1,6 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { jwtDecode } from "jwt-decode";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -27,7 +28,9 @@ export const authOptions: NextAuthOptions = {
                 email: credentials?.email,
                 password: credentials?.password,
               }),
-              headers: { "Content-Type": "application/json" },
+              headers: {
+                "Content-Type": "application/json",
+              },
             },
           );
           const data = await response.json();
@@ -36,11 +39,17 @@ export const authOptions: NextAuthOptions = {
             throw new Error(data.message || "something went wrong");
           }
           console.log("authorize", data);
+          // const decoded = JSON.parse(atob(data.token).split(".")[1]);
+          interface DecodedToken {
+            id: string;
+          }
+          const decoded = jwtDecode<DecodedToken>(data.token);
 
           return {
-            id: "",
+            id: decoded.id,
             email: data.user.email,
             name: data.user.name,
+            accessToken: data.token,
           };
         } catch (error) {
           console.log(error);
@@ -53,6 +62,31 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/login",
   },
+
+  callbacks: {
+    jwt({ token, user }) {
+      console.log("jwt", { token, user });
+
+      if (user) {
+        token.accessToken = user.accessToken;
+        token.user = {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+        };
+      }
+      return token;
+    },
+    session({ token, session }) {
+      //1-use session , 2-getServerSessions 3-/api/auth/session
+      console.log("session", { token, session });
+
+      session.user = token.user;
+
+      return session;
+    },
+  },
+
   session: {
     maxAge: 60 * 60 * 24 * 7,
   },
