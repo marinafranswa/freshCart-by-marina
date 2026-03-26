@@ -1,4 +1,4 @@
-import { Package, Tag, LucideIcon } from "lucide-react";
+import { Package, LucideIcon } from "lucide-react";
 import Link from "next/link";
 
 interface BreadcrumbItem {
