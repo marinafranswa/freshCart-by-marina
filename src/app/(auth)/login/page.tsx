@@ -4,6 +4,7 @@ import  image  from "@/assets/2e5810ff3e-e750761ebcd4ae5907db.png";
 import { Clock, Lock,  Shield, Star, Truck, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import LoginComponent from "@/components/LoginComponent/LoginComponent";
+import Link from "next/link";
 
 export default function LoginPage() {
 
@@ -100,12 +101,12 @@ export default function LoginPage() {
                 <div className="text-center mt-8 pt-6 border-t border-gray-100">
                   <p className="text-gray-600">
                     New to FreshCart?
-                    <a
+                    <Link
                       className="text-green-600 hover:text-green-700 ms-2 font-semibold cursor-pointer"
                       href="/signup"
                     >
                       Create an account
-                    </a>
+                    </Link>
                   </p>
                 </div>
                 <div className="flex items-center justify-center space-x-6 mt-6 text-xs text-gray-500">

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Link from "next/link";
 import SponsorBar from "../SponsorBar/SponsorBar";
@@ -12,6 +12,7 @@ import {
   Search,
   ShoppingCart,
   User,
+  UserCircle,
 } from "lucide-react";
 
 import {
@@ -26,6 +27,19 @@ import { cn } from "@/lib/utils";
 import { useSession } from "next-auth/react";
 import { useLogout } from "@/hooks/useLogout";
 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Badge } from "@/components/ui/badge";
+import { useCart } from "@/context/CartContext";
+import { getUserCart } from "@/actions/cart.actions";
+import { useEffect } from "react";
+import { useWishlist } from "@/context/wishlistContext";
+import { getUserWishlist } from "@/actions/wishlist.actions";
 interface NavbarProps {
   className?: string;
 }
@@ -47,7 +61,26 @@ const categories = [
 const Navbar = ({ className }: NavbarProps) => {
   const pathname = usePathname();
   const { status, data: sessionData } = useSession();
-const { logOutHandler } = useLogout();
+  const { numOfCartItems, updateNumOfCartItems } = useCart();
+  const { count, updateNumOfWishlistItems } = useWishlist();
+  const { logOutHandler } = useLogout();
+
+useEffect(() => {
+  if (status !== "authenticated") return;
+
+  getUserCart()
+    .then((res) => {
+      if (res.status) updateNumOfCartItems(res.numOfCartItems);
+    })
+    .catch(console.error);
+
+  getUserWishlist()
+    .then((res) => {
+      if (res.status) updateNumOfWishlistItems(res.count);
+    })
+    .catch(console.error);
+}, [status]);
+
   return (
     <>
       <SponsorBar status={status} sessionData={sessionData} />
@@ -124,7 +157,7 @@ const { logOutHandler } = useLogout();
                 </NavigationMenuList>
               </NavigationMenu>
 
-              <div className="flex items-center gap-1 lg:gap-2">
+              <div className="flex items-center gap-2 lg:gap-3">
                 <Link
                   className="hidden lg:flex items-center gap-2 pr-3 mr-2 border-r border-gray-200 hover:opacity-80 transition-opacity"
                   href="/contact"
@@ -145,6 +178,9 @@ const { logOutHandler } = useLogout();
                   title="Wishlist"
                   href="/wishlist"
                 >
+                  <Badge className="h-5 w-5 bg-red-600 absolute top-0 inset-e-0">
+                    {count}
+                  </Badge>
                   <Heart className="text-gray-500" />
                 </Link>
                 <Link
@@ -152,6 +188,10 @@ const { logOutHandler } = useLogout();
                   title="Cart"
                   href="/cart"
                 >
+                  <Badge className="h-5 w-5 bg-red-600 absolute top-0 inset-e-0">
+                    {numOfCartItems}
+                  </Badge>
+
                   <ShoppingCart
                     className="text-gray-500 fill-gray-500"
                     size={25}
@@ -172,17 +212,21 @@ const { logOutHandler } = useLogout();
                   </>
                 ) : (
                   <>
-                    <Link className="hidden lg:flex" href={"/profile"}>
-                      {sessionData?.user?.name}
-                    </Link>
-                    <Button
-                      onClick={logOutHandler}
-                      variant={"outline"}
-                      className="hidden lg:flex items-center gap-2 ml-2 px-5 py-5 rounded-full bg-green-600 hover:bg-green-700 hover:text-white text-white text-xs xl:text-sm font-semibold transition-colors shadow-sm shadow-green-600/20"
-                    >
-                      <User size={16} />
-                      Sign Out
-                    </Button>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <UserCircle className="text-gray-500" size={25} />
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent>
+                        <DropdownMenuGroup>
+                          <DropdownMenuItem>
+                            <Link href={"/profile"}>Profile</Link>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={logOutHandler}>
+                            SignOut
+                          </DropdownMenuItem>
+                        </DropdownMenuGroup>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </>
                 )}
                 <Dialog status={status} sessionData={sessionData} />
@@ -195,4 +239,4 @@ const { logOutHandler } = useLogout();
   );
 };
 
-export default Navbar; 
+export default Navbar;

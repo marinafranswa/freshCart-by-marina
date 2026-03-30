@@ -1,8 +1,10 @@
-import { Eye, Heart, Plus, RefreshCcw, Star } from "lucide-react";
+import { Eye, Heart, RefreshCcw, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Product } from "@/interfaces/products.interface";
+import AddToCartButton from "../AddToCartButton/AddToCartButton";
+import AddToWishlistButton from "../AddToWishlistButton/AddToWishlistButton";
 
 const totalStars: number = 5;
 
@@ -25,7 +27,8 @@ export default function ProductCard({ product }: ProductCardProps) {
             <span className="bg-red-500 text-white text-xs px-2 py-1 rounded">
               -
               {Math.floor(
-                ((product?.price - product?.priceAfterDiscount) / product?.price) *
+                ((product?.price - product?.priceAfterDiscount) /
+                  product?.price) *
                   100,
               )}
               %
@@ -34,9 +37,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         ) : null}
 
         <div className="absolute top-3 right-3 flex flex-col space-y-2">
-          <Button className="bg-white h-8 w-8 rounded-full flex items-center justify-center transition cursor-pointer shadow-sm text-gray-600 hover:text-red-500">
-            <Heart size={16} />
-          </Button>
+       <AddToWishlistButton className={"bg-white h-8 w-8 rounded-full flex items-center justify-center transition cursor-pointer shadow-sm text-gray-600 hover:text-red-500"} productId={product.id}/>
           <Button className="bg-white h-8 w-8 rounded-full flex items-center transition cursor-pointer justify-center text-gray-600 hover:text-emerald-600 shadow-sm">
             <RefreshCcw size={16} />
           </Button>
@@ -50,7 +51,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       </div>
       <div className="p-4">
         <div className="text-xs text-gray-500 mb-1">
-          {product?.category.name}
+          {product?.category?.name}
         </div>
         <h3
           className="font-medium mb-1 cursor-pointer truncate"
@@ -91,10 +92,13 @@ export default function ProductCard({ product }: ProductCardProps) {
               </span>
             </div>
           )}
-
-          <Button className="h-10 w-10 rounded-full flex items-center justify-center transition bg-emerald-600 text-white hover:bg-emerald-700 disabled:opacity-70">
-            <Plus />
-          </Button>
+          <AddToCartButton
+            productId={product.id}
+            className={
+              "h-10 w-10 rounded-full flex items-center justify-center transition bg-green-600 text-white hover:bg-green-700 disabled:opacity-70"
+            }
+       
+          />
         </div>
       </div>
     </div>

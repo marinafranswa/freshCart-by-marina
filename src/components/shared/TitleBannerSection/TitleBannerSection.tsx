@@ -9,7 +9,6 @@ interface BreadcrumbItem {
 interface TitleBannerSectionProps {
   title: string;
   description?: string;
-  icon?: LucideIcon;
   breadcrumbs?: BreadcrumbItem[];
 }
 

@@ -12,7 +12,7 @@ export default function NavTitle({product}:NavTitleProps) {
           <ol className="flex items-center flex-wrap gap-1 text-sm">
             <li className="flex items-center">
               <Link
-                className="text-gray-500 hover:text-primary-600 transition flex items-center gap-1.5"
+                className="text-gray-500 hover:text-green-600 transition flex items-center gap-1.5"
                 href="/"
               >
                 <House size={20} />
@@ -22,7 +22,7 @@ export default function NavTitle({product}:NavTitleProps) {
             </li>
             <li className="flex items-center">
               <Link
-                className="text-gray-500 hover:text-primary-600 transition flex items-center gap-1.5"
+                className="text-gray-500 hover:text-green-600 transition flex items-center gap-1.5"
                 href={`/categories/${product._id}`}
               >
                 {product.category.name}
@@ -31,7 +31,7 @@ export default function NavTitle({product}:NavTitleProps) {
             </li>
             <li className="flex items-center">
               <Link
-                className="text-gray-500 hover:text-primary-600 transition flex items-center gap-1.5"
+                className="text-gray-500 hover:text-green-600 transition flex items-center gap-1.5"
                 href={`/categories/${product.subcategory[0]._id}`}
               >
                 {product.subcategory[0].name}
