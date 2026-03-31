@@ -138,22 +138,22 @@ export default async function CartPage() {
                     </Button>
                     <Button asChild variant={"outline"}>
                       <Link
-                        className="w-full bg-linear-to-r from-green-600 to-green-700 text-white py-6 px-6 rounded-xl font-semibold hover:from-green-700 hover:to-green-800 transition-all flex items-center justify-center gap-3 shadow-lg shadow-green-600/20 active:scale-[0.98]"
-                        href="/checkout"
+                        className="w-full bg-linear-to-r from-green-600 to-green-700 text-white py-6 px-6 rounded-xl font-semibold hover:from-green-700 hover:to-green-800 hover:text-white transition-all flex items-center justify-center gap-3 shadow-lg shadow-green-600/20 active:scale-[0.98]"
+                        href={`/checkout?id=${cartDetails.cartId}`}
                       >
                         <Lock />
-                        <span>Secure Checkout</span>
+                        Secure Checkout
                       </Link>
                     </Button>
                     <div className="flex items-center justify-center gap-4 py-2">
                       <div className="flex items-center gap-1.5 text-xs text-gray-500">
                         <Shield color="green" size={12} />
-                        <span>Secure Payment</span>
+                        Secure Payment
                       </div>
                       <div className="w-px h-4 bg-gray-200" />
                       <div className="flex items-center gap-1.5 text-xs text-gray-500">
                         <Truck color="blue" size={16} />
-                        <span>Fast Delivery</span>
+                        Fast Delivery
                       </div>
                     </div>
                     <Button

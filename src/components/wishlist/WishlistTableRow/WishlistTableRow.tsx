@@ -38,8 +38,9 @@ export default function WishlistTableRow({ product }: { product: Product }) {
           />
           <div className="min-w-0">
             <Link
-              className="truncate font-medium text-gray-900 hover:text-green-600 transition-colors"
+              className="font-medium text-gray-900 hover:text-green-600 transition-colors line-clamp-2"
               href={`/products/${product._id}`}
+              title={product.title}
             >
               {product.title}
             </Link>
@@ -80,7 +81,11 @@ export default function WishlistTableRow({ product }: { product: Product }) {
           productId={product._id}
           className="flex-1 md:flex-none inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all bg-green-600 text-white hover:bg-green-700"
         />
-        <Button variant="outline" onClick={()=>removeProductFromWishlist(product._id)} size="icon">
+        <Button
+          variant="outline"
+          onClick={() => removeProductFromWishlist(product._id)}
+          size="icon"
+        >
           <Trash className="w-4 h-4" />
         </Button>
       </TableCell>

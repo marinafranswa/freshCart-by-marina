@@ -24,7 +24,7 @@ export default async function wishlistPage() {
             <div className="container mx-auto px-4 py-8">
               <nav className="flex items-center gap-2 text-sm text-gray-500 mb-4">
                 <Link
-                  className="hover:text-primary-600 transition-colors"
+                  className="hover:text-green-600 transition-colors"
                   href="/"
                 >
                   Home

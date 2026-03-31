@@ -22,9 +22,15 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
-import { Session } from "next-auth"; // ✅ adjust to your session type
-import { signOut } from "next-auth/react";
+import { Session } from "next-auth"; 
 import { useLogout } from "@/hooks/useLogout";
+import { useEffect } from "react";
+import { getUserCart } from "@/actions/cart.actions";
+import { getUserWishlist } from "@/actions/wishlist.actions";
+import { useCart } from "@/context/CartContext";
+import { useWishlist } from "@/context/wishlistContext";
+import { Badge } from "@/components/ui/badge";
+
 
 const links = [
   { name: "Home", href: "/" },
@@ -40,7 +46,26 @@ interface DialogProps {
 }
 
 export default function Dialog({ status, sessionData }: DialogProps) {
+
   const { logOutHandler } = useLogout();
+  const { numOfCartItems, updateNumOfCartItems } = useCart();
+  const { count, updateNumOfWishlistItems } = useWishlist();
+  useEffect(() => {
+    if (status !== "authenticated") return;
+  
+    getUserCart()
+      .then((res) => {
+        if (res.status) updateNumOfCartItems(res.numOfCartItems);
+      })
+      .catch(console.error);
+  
+    getUserWishlist()
+      .then((res) => {
+        if (res.status) updateNumOfWishlistItems(res.count);
+      })
+      .catch(console.error);
+  }, [status]);
+  
   return (
     <Drawer direction="right">
       <DrawerTrigger asChild>
@@ -92,7 +117,7 @@ export default function Dialog({ status, sessionData }: DialogProps) {
           <div className="space-y-1">
             {links.map((link) => (
               <Link
-                key={link.href} 
+                key={link.href}
                 className="flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-gray-700 hover:text-green-600 hover:bg-green-50 transition-colors"
                 href={link.href}
               >
@@ -115,6 +140,7 @@ export default function Dialog({ status, sessionData }: DialogProps) {
               </div>
               <span className="font-medium text-gray-700">Wishlist</span>
             </div>
+            <Badge className="bg-red-500 h-6 w-6">{count}</Badge>
           </Link>
           <Link
             className="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-green-50 transition-colors"
@@ -129,6 +155,7 @@ export default function Dialog({ status, sessionData }: DialogProps) {
               </div>
               <span className="font-medium text-gray-700">Cart</span>
             </div>
+            <Badge className="bg-red-500 h-6 w-6">{numOfCartItems}</Badge>
           </Link>
         </div>
 
@@ -152,7 +179,6 @@ export default function Dialog({ status, sessionData }: DialogProps) {
             </div>
           ) : (
             <div className="p-4 space-y-1">
-
               <Link
                 className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-green-50 transition-colors"
                 href="/profile"
@@ -167,7 +193,7 @@ export default function Dialog({ status, sessionData }: DialogProps) {
 
               <Button
                 variant="ghost"
-               onClick={logOutHandler}
+                onClick={logOutHandler}
                 className="flex items-center gap-3 px-4 py-7 rounded-xl hover:bg-red-50 hover:text-red-600 transition-colors w-full justify-start"
               >
                 <div className="w-9 h-9 rounded-full bg-red-100 flex items-center justify-center">

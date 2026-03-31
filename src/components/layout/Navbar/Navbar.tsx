@@ -221,6 +221,9 @@ useEffect(() => {
                           <DropdownMenuItem>
                             <Link href={"/profile"}>Profile</Link>
                           </DropdownMenuItem>
+                          <DropdownMenuItem>
+                            <Link href={"/allorders"}>My orders</Link>
+                          </DropdownMenuItem>
                           <DropdownMenuItem onClick={logOutHandler}>
                             SignOut
                           </DropdownMenuItem>
