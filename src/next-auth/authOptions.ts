@@ -75,7 +75,6 @@ export const authOptions: NextAuthOptions = {
     },
     session({ token, session }) {
       //1-use session , 2-getServerSessions 3-/api/auth/session
-
       session.user = token.user;
 
       return session;
