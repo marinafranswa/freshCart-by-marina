@@ -55,14 +55,13 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
-
+  secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: "/login",
   },
 
   callbacks: {
     jwt({ token, user }) {
-
       if (user) {
         token.accessToken = user.accessToken;
         token.user = {
