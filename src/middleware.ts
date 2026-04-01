@@ -1,9 +1,9 @@
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
-
-const protectedRoutes=["/cart","/profile","/checkout","/allorders"]
+const protectedRoutes = ["/cart", "/profile", "/checkout", "/allorders"];
 const authRoutes = ["/login", "/register"];
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -25,5 +25,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/cart/:path*", "/profile/:path*","/login","/register"],
+  matcher: ["/cart/:path*", "/profile/:path*", "/login", "/register"],
 };
