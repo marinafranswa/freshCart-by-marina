@@ -14,7 +14,6 @@ import {
   MapPin,
   Monitor,
   Package,
-  Phone,
 } from "lucide-react";
 import { order } from "@/interfaces/allorders.interface";
 import Image from "next/image";
@@ -33,8 +32,8 @@ export default function OrderCard({ order }: orderCardProps) {
           <div className="relative shrink-0">
             <div className="w-16 h-16 rounded-xl border border-gray-100 bg-gray-50 flex items-center justify-center text-2xl">
               <Image
-                src={order.cartItems[0].product.imageCover}
-                alt={order.cartItems[0].product.title}
+                src={order.cartItems[0]?.product?.imageCover}
+                alt={order.cartItems[0]?.product?.title}
                 width={160}
                 height={160}
               />
@@ -110,7 +109,6 @@ export default function OrderCard({ order }: orderCardProps) {
           )}
         </div>
 
-        {/* Expanded content */}
         {expanded && (
           <>
             <Separator />
@@ -157,24 +155,8 @@ export default function OrderCard({ order }: orderCardProps) {
               </div>
             </div>
 
-            {/* Bottom Grid */}
-            <div className="grid grid-cols-2 gap-4 px-6 pb-6">
-              {/* <div className="bg-gray-50 rounded-xl border border-gray-100 p-4">
-                <h4 className="flex items-center gap-1.5 text-sm font-bold text-gray-900 mb-3">
-                  <MapPin size={13} className="text-green-600" />
-                  Delivery Address
-                </h4>
-                <p className="text-sm font-semibold text-gray-900">
-                  {order.shippingAddress.city}
-                </p>
-                <p className="text-xs text-gray-500 mt-1">
-                  {order.shippingAddress.details}
-                </p>
-                <p className="flex items-center gap-1.5 text-xs text-gray-500 mt-2">
-                  <Phone size={11} /> {order.shippingAddress.phone}
-                </p>
-              </div> */}
-
+   
+            <div className="grid grid-cols-1 gap-4 px-6 pb-6">
               <div className="bg-yellow-50 rounded-xl border border-yellow-200 p-4">
                 <h4 className="flex items-center gap-1.5 text-sm font-bold text-gray-900 mb-3">
                   <Clock size={13} className="text-amber-500" />

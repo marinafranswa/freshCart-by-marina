@@ -3,7 +3,7 @@ import OrderCard from "@/components/checkout/OrderCard/OrderCard";
 import HeadingSection from "@/components/shared/HeadingSection/HeadingSection";
 import { order } from "@/interfaces/allorders.interface";
 import { BoxIcon } from "lucide-react";
-import Link from "next/link";
+
 
 export default async function AllOrdersPage() {
   const resp = await getUserOrders();
