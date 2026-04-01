@@ -5,30 +5,17 @@ import { order } from "@/interfaces/allorders.interface";
 import { BoxIcon } from "lucide-react";
 import Link from "next/link";
 
-export const dynamic = "force-dynamic";
 
 export default async function AllOrdersPage() {
-  let allOrders: order[] = [];
+  const resp = await getUserOrders();
+  const { status, ...orders } = resp;
+  
 
-  try {
-    const resp = await getUserOrders();
-
-    if (resp && typeof resp === "object") {
-      const { status, ...orders } = resp;
-      const values = Object.values(orders);
-
-      allOrders = values.filter(
-        (item): item is order => item !== null && typeof item === "object",
-      );
-    }
-  } catch (error) {
-    console.error("Failed to fetch orders:", error);
-
-  }
+  const allOrders : order[] = Object.values(orders);
 
   return (
     <>
-      {allOrders.length > 0 ? ( 
+      {allOrders.length > 1 ? (
         <section className="bg-gray-50 min-h-screen py-8">
           <div className="container px-4">
             <HeadingSection
@@ -37,6 +24,7 @@ export default async function AllOrdersPage() {
               icon={BoxIcon}
               subtitle={"total orders"}
             />
+
             <div className="space-y-4 px-4 container mx-auto">
               {allOrders.map((order) => (
                 <OrderCard order={order} key={order?.id} />
@@ -46,7 +34,7 @@ export default async function AllOrdersPage() {
         </section>
       ) : (
         <div className="mx-auto px-4 py-8">
-          <div className="mb-6 text-sm text-gray-500">Showing 0 items</div>
+          <div className="mb-6 text-sm text-gray-500">Showing 0 items </div>
           <div className="text-center py-20">
             <div className="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-5">
               <BoxIcon />
@@ -54,7 +42,9 @@ export default async function AllOrdersPage() {
             <h3 className="text-lg font-bold text-gray-900 mb-2">
               No Products Found
             </h3>
-            <p className="text-gray-500 mb-6">Shop again</p>
+            <p className="text-gray-500 mb-6">
+             Shop again
+            </p>
             <Link
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary-600 text-white font-semibold hover:bg-primary-700 transition-colors"
               href="/products"
