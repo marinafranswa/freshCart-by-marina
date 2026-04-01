@@ -9,7 +9,6 @@ interface CheckoutPageProps{
 
 export default async function CheckoutPage({ searchParams }:CheckoutPageProps) {
     const { id } = await searchParams
-    console.log("cartId",id);
     
 
   return (

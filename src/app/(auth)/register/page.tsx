@@ -28,7 +28,6 @@ export default function RegisterPage() {
 
   async function onSubmit(formValues: registerPayloadType) {
  const res= await registerHandler(formValues)
- console.log(res);
     if (res.ok) {
    toast.success("Account has been created successfully")
   router.push("/login")

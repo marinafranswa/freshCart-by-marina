@@ -14,7 +14,6 @@ export async function loginHandler(formValues: loginPayloadType) {
       },
     );
     const data = await response.json();
-    console.log(data);
     if (!response.ok) {
       throw new Error(data.message || "something went wrong");
     }
@@ -25,7 +24,6 @@ export async function loginHandler(formValues: loginPayloadType) {
     });
     return data;
   } catch (error) {
-    console.log(error);
     return error;
   }
 }
@@ -40,7 +38,6 @@ export async function registerHandler(formValues: registerPayloadType) {
       },
     );
     const data = await response.json();
-    console.log(data);
     if (!response.ok) {
       throw new Error(data.message || "something went wrong");
     }
@@ -50,7 +47,6 @@ export async function registerHandler(formValues: registerPayloadType) {
       ok:true
     };
   } catch (error) {
-    console.log(error);
     return {error,ok:false};
   }
 }

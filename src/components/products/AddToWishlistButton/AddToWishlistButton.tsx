@@ -23,7 +23,6 @@ export default function AddToWishlistButton({
     if (res.status) {
       toast.success(res.message);
         updateNumOfWishlistItems(res.data.length);
-        console.log(res);
         
     } else {
       toast.error(res.error.message);

@@ -38,9 +38,7 @@ export default function CheckoutForm({ cartId }: CheckoutFormProps) {
   });
 
   async function onSubmit(formValues: addressPayloadType) {
-    console.log(formValues);
     const resp = await createOrder(cartId, formValues);
-    console.log("checkout", resp);
     if (resp.status) {
       if (getValues("paymentMethod") === "cash") {
         toast.success(resp.message, { duration: 3000 });

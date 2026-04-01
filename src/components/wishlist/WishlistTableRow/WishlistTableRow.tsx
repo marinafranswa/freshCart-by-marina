@@ -17,7 +17,6 @@ export default function WishlistTableRow({ product }: { product: Product }) {
   const { updateNumOfWishlistItems } = useWishlist();
     async function removeProductFromWishlist(productId: string) {
       const res = await deleteProductFromWishlist(productId);
-      console.log(res);
       if (res.status) {
         toast.success(res.message);
         updateNumOfWishlistItems(res.numOfCartItems);

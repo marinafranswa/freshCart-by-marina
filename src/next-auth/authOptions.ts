@@ -34,11 +34,9 @@ export const authOptions: NextAuthOptions = {
             },
           );
           const data = await response.json();
-          console.log(data);
           if (!response.ok) {
             throw new Error(data.message || "something went wrong");
           }
-          console.log("authorize", data);
           // const decoded = JSON.parse(atob(data.token).split(".")[1]);
           interface DecodedToken {
             id: string;
@@ -52,7 +50,6 @@ export const authOptions: NextAuthOptions = {
             accessToken: data.token,
           };
         } catch (error) {
-          console.log(error);
           throw new Error((error as Error).message);
         }
       },
@@ -65,7 +62,6 @@ export const authOptions: NextAuthOptions = {
 
   callbacks: {
     jwt({ token, user }) {
-      console.log("jwt", { token, user });
 
       if (user) {
         token.accessToken = user.accessToken;
@@ -79,7 +75,6 @@ export const authOptions: NextAuthOptions = {
     },
     session({ token, session }) {
       //1-use session , 2-getServerSessions 3-/api/auth/session
-      console.log("session", { token, session });
 
       session.user = token.user;
 

@@ -16,9 +16,7 @@ interface AddToCartButtonProps {
 export default function AddToCartButton({ title, className, productId }: AddToCartButtonProps) {
    const {updateNumOfCartItems}= useCart()
 async function addProductToCart(productId:string) {
-    console.log("added", productId);
  const res =await   addToCart(productId)
-    console.log(res);
     if (res.status) {
         toast.success(res.message)
         updateNumOfCartItems(res.numOfCartItems)

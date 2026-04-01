@@ -15,9 +15,11 @@ import {
 import Link from "next/link";
 import CartCardProduct from "@/components/cart/CartCardProduct/CartCardProduct";
 import RemoveUserCart from "@/components/cart/RemoveUserCart/RemoveUserCart";
+import HeadingSection from "@/components/shared/HeadingSection/HeadingSection";
 
 export default async function CartPage() {
   const cartDetails: CartResponse = await getUserCart();
+  
   const products = cartDetails.data?.products;
 
   return (
@@ -25,38 +27,21 @@ export default async function CartPage() {
       {products?.length > 0 ? (
         <section className="bg-gray-50 min-h-screen py-8">
           <div className="container px-4">
-            <div className="mb-8">
-              <nav className="flex items-center gap-2 text-sm text-gray-500 mb-4">
-                <Link className="hover:text-green-600 transition" href="/">
-                  Home
-                </Link>
-                <span>/</span>
-                <span className="text-gray-900 font-medium">Shopping Cart</span>
-              </nav>
-              <div className="flex items-center justify-between">
-                <div>
-                  <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-3">
-                    <span className="bg-linear-to-r from-green-600 to-green-700 text-white w-12 h-12 rounded-xl flex items-center justify-center">
-                      <ShoppingCart size={32} />
-                    </span>
-                    Shopping Cart
-                  </h1>
-                  <p className="text-gray-500 mt-2">
-                    You have
-                    <span className="font-semibold text-green-600 px-0.5">
-                      {cartDetails.numOfCartItems} items
-                    </span>
-                    in your cart
-                  </p>
-                </div>
-              </div>
-            </div>
+            <HeadingSection
+              numberOfItems={cartDetails.numOfCartItems}
+              title={"Shopping Cart"}
+              icon={ShoppingCart}
+              subtitle={" in your cart"}
+            />
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               <div className="lg:col-span-2">
                 <div className="space-y-4">
                   {products.map((product) => (
-                   <CartCardProduct key={product.product._id} product={product}/>
+                    <CartCardProduct
+                      key={product.product._id}
+                      product={product}
+                    />
                   ))}
                 </div>
                 <div className="mt-6 pt-6 border-t border-gray-200 flex items-center justify-between">
@@ -72,7 +57,7 @@ export default async function CartPage() {
                       <ArrowLeft size={16} /> Continue Shopping
                     </Link>
                   </Button>
-               <RemoveUserCart/>
+                  <RemoveUserCart />
                 </div>
               </div>
               <div className="lg:col-span-1">
@@ -87,29 +72,77 @@ export default async function CartPage() {
                     </p>
                   </CardHeader>
                   <div className="p-6 space-y-5">
-                    <div className="bg-linear-to-r from-green-50 to-emerald-50 rounded-xl p-4 flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
-                        <Truck color="green" />
+                    {cartDetails.data.products.reduce(
+                      (sum, item) => sum + item.price * item.count,
+                      0,
+                    ) >= 500 ? (
+                      <div className="bg-linear-to-r from-green-50 to-emerald-50 rounded-xl p-4 flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
+                          <Truck color="green" />
+                        </div>
+                        <div>
+                          <p className="font-semibold text-green-700">
+                            Free Shipping!
+                          </p>
+                          <p className="text-sm text-green-600">
+                            You qualify for free delivery
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="font-semibold text-green-700">
-                          Free Shipping!
-                        </p>
-                        <p className="text-sm text-green-600">
-                          You qualify for free delivery
-                        </p>
+                    ) : (
+                      <div className="bg-orange-50 rounded-xl p-4">
+                        <div className="flex items-center gap-3 mb-3">
+                          <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center">
+                            <Truck color="orange" />
+                          </div>
+                          <p className="text-sm font-medium text-orange-700">
+                            Add{" "}
+                            <span className="font-bold">
+                              {500 -
+                                cartDetails.data.products.reduce(
+                                  (sum, item) => sum + item.price * item.count,
+                                  0,
+                                )}{" "}
+                              EGP
+                            </span>{" "}
+                            for free shipping
+                          </p>
+                        </div>
+                        {/* Progress Bar */}
+                        <div className="w-full bg-orange-200 rounded-full h-2">
+                          <div
+                            className="bg-orange-500 h-2 rounded-full transition-all duration-500"
+                            style={{
+                              width: `${Math.min((cartDetails.data.products.reduce((sum, item) => sum + item.price * item.count, 0) / 500) * 100, 100)}%`,
+                            }}
+                          />
+                        </div>
                       </div>
-                    </div>
+                    )}
+
                     <div className="space-y-3">
                       <div className="flex justify-between text-gray-600">
                         <span>Subtotal</span>
-                        <span className="font-medium text-gray-900">
-                          {cartDetails.data.totalCartPrice} EGP
+                        <span className="text-gray-700">
+                          {cartDetails.data.products.reduce(
+                            (sum, item) => sum + item.price * item.count,
+                            0,
+                          )}{" "}
+                          EGP
                         </span>
                       </div>
                       <div className="flex justify-between text-gray-600">
                         <span>Shipping</span>
-                        <span className="font-medium text-green-600">FREE</span>
+                        <span className="font-medium">
+                          {cartDetails.data.products.reduce(
+                            (sum, item) => sum + item.price * item.count,
+                            0,
+                          ) >= 500 ? (
+                            <span className="text-green-600">FREE</span>
+                          ) : (
+                            <span className="text-gray-700">50 EGP</span>
+                          )}
+                        </span>
                       </div>
                       <div className="border-t border-dashed border-gray-200 pt-3 mt-3">
                         <div className="flex justify-between items-baseline">
@@ -118,7 +151,7 @@ export default async function CartPage() {
                           </span>
                           <div className="text-right">
                             <span className="text-2xl font-bold text-gray-900">
-                              {cartDetails.data.totalCartPrice}
+                              {cartDetails.data.totalCartPrice + 50}
                             </span>
                             <span className="text-sm text-gray-500 ml-1">
                               EGP

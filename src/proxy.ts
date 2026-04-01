@@ -17,7 +17,7 @@ export async function proxy(request: NextRequest) {
     if (token && authRoutes.some((route) => pathname.startsWith(route))) {
       return NextResponse.redirect(new URL("/", request.nextUrl));
     }
-    console.log("token",token);
+
     return NextResponse.next()
 }
 

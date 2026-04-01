@@ -8,7 +8,7 @@ import Link from "next/link";
 
 export default async function CategoriesPage() {
   const resp: CategoriesResponse = await getCategories();
-  const categories = resp.data;
+  const categories = resp?.data;
   return (
       <section className="min-h-screen bg-gray-50/50">
         <TitleBannerSection

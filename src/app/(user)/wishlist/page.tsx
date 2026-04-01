@@ -11,6 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import WishlistTableRow from "@/components/wishlist/WishlistTableRow/WishlistTableRow";
+import HeadingSection from "@/components/shared/HeadingSection/HeadingSection";
 
 export default async function wishlistPage() {
   const wishListDetails: wishlistResponse = await getUserWishlist();
@@ -20,37 +21,13 @@ export default async function wishlistPage() {
     <>
       {products?.length > 0 ? (
         <div className="min-h-screen bg-gray-50/50">
-          <div className="bg-white border-b border-gray-100">
-            <div className="container mx-auto px-4 py-8">
-              <nav className="flex items-center gap-2 text-sm text-gray-500 mb-4">
-                <Link
-                  className="hover:text-green-600 transition-colors"
-                  href="/"
-                >
-                  Home
-                </Link>
-                <span>/</span>
-                <span className="text-gray-900 font-medium">Wishlist</span>
-              </nav>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-red-50 flex items-center justify-center">
-                    <Heart fill="red" color="red" />
-                  </div>
-                  <div>
-                    <h1 className="text-2xl font-bold text-gray-900">
-                      My Wishlist
-                    </h1>
-                    <p className="text-gray-500 text-sm">
-                      {wishListDetails.count} items saved
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
           <div className="container mx-auto px-4 py-8">
+            <HeadingSection
+              numberOfItems={products.length}
+              title={"My wishlist"}
+              icon={Heart}
+              subtitle={"total likes"}
+            />
             <Table className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
               <TableHeader className="hidden md:table-header-group border-b border-gray-100 bg-gray-50 ">
                 <TableRow className="grid grid-cols-12  gap-4 px-6 py-3 w-full">

@@ -40,6 +40,7 @@ import { getUserCart } from "@/actions/cart.actions";
 import { useEffect } from "react";
 import { useWishlist } from "@/context/wishlistContext";
 import { getUserWishlist } from "@/actions/wishlist.actions";
+import { getCategories, getSpecificSubCategories } from "@/services/categories.service";
 interface NavbarProps {
   className?: string;
 }
@@ -49,13 +50,15 @@ const links = [
   { name: "Shop", href: "/products" },
   { name: "Brands", href: "/brands" },
 ];
+const resp = await getCategories();
+const categoriesData = resp?.data;
 
 const categories = [
   { name: "All Categories", href: "/categories" },
-  { name: "Electronics", href: `/categories/electronics` },
-  { name: "Women's Fashion", href: `/categories/womens-fashion` },
-  { name: "Men's Fashion", href: `/categories/mens-fashion` },
-  { name: "Beauty & Health", href: `/categories/beauty-health` },
+  ...categoriesData.map((cat: { _id: string; name: string }) => ({
+    name: cat.name,
+    href: `/products?category=${cat._id}`,
+  })),
 ];
 
 const Navbar = ({ className }: NavbarProps) => {

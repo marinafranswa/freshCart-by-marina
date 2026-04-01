@@ -5,8 +5,8 @@ import { productsResponse } from "@/types/response.type";
 
 
 export default async function Products() {
-  const response: productsResponse = await getProducts(12);
-  const products = response.data;
+  const response: productsResponse = await getProducts();
+  const products = response?.data;
   const filterProds = products.filter((prod) => prod.priceAfterDiscount);
 
   return (

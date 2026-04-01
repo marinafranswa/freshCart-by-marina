@@ -35,7 +35,6 @@ export default function LoginComponent() {
       redirect: false,
       callbackUrl: "/",
     });
-    console.log(resp);
     if (resp?.ok) {
       toast.success("welcome back");
       router.push("/");
