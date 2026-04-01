@@ -5,11 +5,11 @@ import { order } from "@/interfaces/allorders.interface";
 import { BoxIcon } from "lucide-react";
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
 
 export default async function AllOrdersPage() {
   const resp = await getUserOrders();
-  const { status, ...orders } = resp;
-  
+    const { status, ...orders } = resp ?? {};  
 
   const allOrders : order[] = Object.values(orders);
 
