@@ -73,9 +73,9 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     session({ token, session }) {
-      //1-use session , 2-getServerSessions 3-/api/auth/session
-      session.user = token.user;
-
+      if (token?.user) {
+        session.user = token.user;
+      }
       return session;
     },
   },
