@@ -58,6 +58,7 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: "/login",
+    error: "/login",
   },
 
   callbacks: {
@@ -82,5 +83,21 @@ export const authOptions: NextAuthOptions = {
 
   session: {
     maxAge: 60 * 60 * 24 * 7,
+  },
+  events: {
+    async signIn(message) {
+      console.log("signIn", message);
+    },
+    async signOut(message) {
+      console.log("signOut", message);
+    },
+    async session(message) {
+      console.log("session", message);
+    },
+  },
+  logger: {
+    error(code, metadata) {
+      console.error("nextauth error", code, metadata);
+    },
   },
 };
