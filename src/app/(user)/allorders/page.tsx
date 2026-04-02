@@ -15,7 +15,7 @@ export default async function AllOrdersPage() {
 
   return (
     <>
-      {allOrders.length > 1 ? (
+      {allOrders.length > 0 ? (
         <section className="bg-gray-50 min-h-screen py-8">
           <div className="container px-4">
             <HeadingSection

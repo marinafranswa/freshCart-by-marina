@@ -20,7 +20,6 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials, req) {
         try {
-          console.log("🔐 authorize called", credentials?.email);
           const response = await fetch(
             "https://ecommerce.routemisr.com/api/v1/auth/signin",
             {
@@ -34,9 +33,7 @@ export const authOptions: NextAuthOptions = {
               },
             },
           );
-          console.log("📡 API response status", response.status);
           const data = await response.json();
-          console.log("📦 API data", JSON.stringify(data));
           if (!response.ok) {
             throw new Error(data.message || "something went wrong");
           }
@@ -45,7 +42,6 @@ export const authOptions: NextAuthOptions = {
             id: string;
           }
           const decoded = jwtDecode<DecodedToken>(data.token);
-              console.log("✅ decoded", decoded);    
 
           return {
             id: decoded.id,
@@ -54,7 +50,6 @@ export const authOptions: NextAuthOptions = {
             accessToken: data.token,
           };
         } catch (error) {
-              console.log("❌ error", (error as Error).message); 
           throw new Error((error as Error).message);
         }
       },
@@ -63,7 +58,6 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: "/login",
-    error: "/login",
   },
 
   callbacks: {
@@ -88,21 +82,5 @@ export const authOptions: NextAuthOptions = {
 
   session: {
     maxAge: 60 * 60 * 24 * 7,
-  },
-  events: {
-    async signIn(message) {
-      console.log("signIn", message);
-    },
-    async signOut(message) {
-      console.log("signOut", message);
-    },
-    async session(message) {
-      console.log("session", message);
-    },
-  },
-  logger: {
-    error(code, metadata) {
-      console.error("nextauth error", code, metadata);
-    },
   },
 };
