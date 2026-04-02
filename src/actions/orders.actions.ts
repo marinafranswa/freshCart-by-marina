@@ -49,7 +49,6 @@ export async function getUserOrders() {
     const resp = await fetch(
       `https://ecommerce.routemisr.com/api/v1/orders/user/${userId}`,
       {
-        method: "GET",
         headers: {
           "Content-Type": "application/json",
         },

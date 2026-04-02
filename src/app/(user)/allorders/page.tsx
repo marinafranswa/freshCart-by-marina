@@ -11,7 +11,8 @@ export default async function AllOrdersPage() {
   const { status, ...orders } = resp;
   
 
-  const allOrders : order[] = Object.values(orders);
+  const allOrders: order[] = Object.values(orders);
+
 
   return (
     <>
