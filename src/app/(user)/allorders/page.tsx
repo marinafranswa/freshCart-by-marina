@@ -6,17 +6,18 @@ import { BoxIcon } from "lucide-react";
 import Link from "next/link";
 
 
+export const dynamic = "force-dynamic";
 export default async function AllOrdersPage() {
   const resp = await getUserOrders();
   const { status, ...orders } = resp;
   
 
-  const allOrders: order[] = Object.values(orders);
+const allOrders: order[] = status ? Object.values(orders) : [];
 
 
   return (
     <>
-      {allOrders.length > 0 ? (
+      {status === true? (
         <section className="bg-gray-50 min-h-screen py-8">
           <div className="container px-4">
             <HeadingSection
